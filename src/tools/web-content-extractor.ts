@@ -151,41 +151,41 @@ async function processUrl(url: string, options: any = {}) {
 
 export const webContentExtractor = {
   name: "extract_web_content",
-  description: "从网页URL提取并清理内容，转换为Markdown格式。支持去除广告、导航等无关内容，专注于主要文章内容。",
+  description: "Extract and clean content from web URLs, converting to Markdown format. Supports removing ads, navigation and irrelevant content, focusing on main article content.",
   parameters: {
     type: "object",
     properties: {
       url: {
-        type: "string",
-        description: "要提取内容的网页URL"
-      },
-      format: {
-        type: "string",
-        enum: ["markdown", "json"],
-        description: "返回格式：markdown（仅返回内容）或json（包含完整信息）",
-        default: "markdown"
-      },
-      timeout: {
-        type: "number",
-        description: "页面加载超时时间（毫秒），默认30000",
-        default: 30000
-      }
+          type: "string",
+          description: "The web URL to extract content from"
+        },
+        format: {
+          type: "string",
+          enum: ["markdown", "json"],
+          description: "Return format: markdown (content only) or json (with complete information)",
+          default: "markdown"
+        },
+        timeout: {
+          type: "number",
+          description: "Page loading timeout in milliseconds, default 30000",
+          default: 30000
+        }
     },
     required: ["url"]
   },
   
   async run(args: { url: string; format?: string; timeout?: number }) {
     try {
-      // 参数验证
+      // Parameter validation
       if (!args.url) {
-        throw new Error("URL参数不能为空");
+        throw new Error("URL parameter cannot be empty");
       }
       
-      // 验证URL格式
+      // Validate URL format
       try {
         new URL(args.url);
       } catch {
-        throw new Error("无效的URL格式");
+        throw new Error("Invalid URL format");
       }
       
       // 处理选项
@@ -202,14 +202,14 @@ export const webContentExtractor = {
         return {
           content: [{
             type: "text",
-            text: `# 网页内容提取结果\n\n**URL:** ${result.url}\n**标题:** ${result.title}\n**提取时间:** ${result.timestamp}\n\n## 提取的内容\n\n\`\`\`json\n${JSON.stringify(result, null, 2)}\n\`\`\``
+            text: `# Web Content Extraction Result\n\n**URL:** ${result.url}\n**Title:** ${result.title}\n**Extraction Time:** ${result.timestamp}\n\n## Extracted Content\n\n\`\`\`json\n${JSON.stringify(result, null, 2)}\n\`\`\``
           }]
         };
       } else {
         return {
           content: [{
             type: "text",
-            text: `# ${result.title}\n\n**来源:** ${result.url}\n**提取时间:** ${result.timestamp}\n\n---\n\n${result.content}`
+            text: `# ${result.title}\n\n**Source:** ${result.url}\n**Extraction Time:** ${result.timestamp}\n\n---\n\n${result.content}`
           }]
         };
       }
@@ -218,7 +218,7 @@ export const webContentExtractor = {
       return {
         content: [{
           type: "text",
-          text: `❌ 网页内容提取失败: ${error.message}`
+          text: `❌ Web content extraction failed: ${error.message}`
         }],
         isError: true
       };

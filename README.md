@@ -6,35 +6,35 @@
 [![GitHub stars](https://img.shields.io/github/stars/guangxiangdebizi/cleanweb-mcp.svg)](https://github.com/guangxiangdebizi/cleanweb-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**一个轻量级的Model Context Protocol (MCP)服务器**
+**A lightweight Model Context Protocol (MCP) server**
 
-专门用于智能提取网页核心内容，自动过滤广告和无关元素，并转换为干净的Markdown格式
+Specialized in intelligently extracting core web content, automatically filtering ads and irrelevant elements, and converting to clean Markdown format
 
-[🚀 快速开始](#-快速开始) • [📖 文档](#-使用方式) • [🔧 配置](#-claude配置) • [🤝 贡献](#-贡献)
+[🚀 Quick Start](#-quick-start) • [📖 Documentation](#-usage) • [🔧 Configuration](#-claude-configuration) • [🤝 Contributing](#-contributing)
 
 </div>
 
-## ✨ 功能特性
+## ✨ Features
 
 <div align="center">
 
-| 🌐 智能提取 | 🧹 内容清理 | 📝 格式转换 | ⚡ 轻量部署 |
+| 🌐 Smart Extraction | 🧹 Content Cleaning | 📝 Format Conversion | ⚡ Lightweight Deploy |
 |:---:|:---:|:---:|:---:|
-| Axios + Cheerio + Readability | 自动过滤广告和干扰元素 | HTML → Markdown | 零浏览器依赖 |
+| Axios + Cheerio + Readability | Auto-filter ads & distractions | HTML → Markdown | Zero browser dependency |
 
 </div>
 
-### 🎯 核心优势
+### 🎯 Core Advantages
 
-- 🌐 **智能内容提取**: 使用Axios + Cheerio + Readability算法提取网页主要内容
-- 🧹 **智能内容清理**: 自动移除广告、导航、侧边栏等干扰元素
-- 📝 **Markdown转换**: 将HTML内容转换为干净的Markdown格式
-- 🖼️ **图片链接优化**: 自动处理过长的图片链接，提升阅读体验
-- ⚡ **轻量级部署**: 无需浏览器依赖，部署简单快速
-- 🔧 **多种输出格式**: 支持纯Markdown或包含元数据的JSON格式
-- 🚀 **MCP协议**: 完全兼容Model Context Protocol标准
+- 🌐 **Smart Content Extraction**: Uses Axios + Cheerio + Readability algorithm to extract main web content
+- 🧹 **Intelligent Content Cleaning**: Automatically removes ads, navigation, sidebars and other distracting elements
+- 📝 **Markdown Conversion**: Converts HTML content to clean Markdown format
+- 🖼️ **Image Link Optimization**: Automatically handles overly long image links for better readability
+- ⚡ **Lightweight Deployment**: No browser dependencies, simple and fast deployment
+- 🔧 **Multiple Output Formats**: Supports pure Markdown or JSON format with metadata
+- 🚀 **MCP Protocol**: Fully compatible with Model Context Protocol standard
 
-### 🛠️ 技术栈
+### 🛠️ Tech Stack
 
 <div align="center">
 
@@ -45,110 +45,110 @@
 
 </div>
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 📦 安装
+### 📦 Installation
 
 ```bash
-# 从npm安装
+# Install from npm
 npm install cleanweb-mcp
 
-# 或者克隆仓库
+# Or clone the repository
 git clone https://github.com/guangxiangdebizi/cleanweb-mcp.git
 cd cleanweb-mcp
 npm install
 ```
 
-> **💡 优势**: 使用轻量级的HTTP客户端，无需下载浏览器，部署更简单！专注于内容清理和优化。
+> **💡 Advantage**: Uses lightweight HTTP client, no browser download required, simpler deployment! Focused on content cleaning and optimization.
 
-## 🔧 构建项目
+## 🔧 Build Project
 
 ```bash
 npm run build
 ```
 
-## 🎯 使用方式
+## 🎯 Usage
 
-### 1. Stdio模式 (本地开发)
+### 1. Stdio Mode (Local Development)
 
 ```bash
 npm run mcp:stdio
 ```
 
-### 2. SSE模式 (通过Supergateway)
+### 2. SSE Mode (via Supergateway)
 
 ```bash
 npm run mcp:sse
 ```
 
-服务器将在 `http://localhost:8000/sse` 启动
+Server will start at `http://localhost:3100/sse`
 
-### 3. WebSocket模式
+### 3. WebSocket Mode
 
 ```bash
 npm run mcp:ws
 ```
 
-### 4. 开发模式 (监听文件变化)
+### 4. Development Mode (Watch file changes)
 
 ```bash
 npm run mcp:dev
 ```
 
-## 🛠️ Claude配置
+## 🛠️ Claude Configuration
 
-### Stdio模式配置
+### Stdio Mode Configuration
 
-在Claude的配置文件中添加：
+Add to Claude's configuration file:
 
 ```json
 {
   "mcpServers": {
-    "copycat2jina": {
+    "cleanweb-mcp": {
       "command": "node",
-      "args": ["path/to/CopyCat2Jina/build/index.js"]
+      "args": ["path/to/your/project/build/index.js"]
     }
   }
 }
 ```
 
-### SSE模式配置
+### SSE Mode Configuration
 
 ```json
 {
   "mcpServers": {
-    "copycat2jina": {
+    "cleanweb-mcp-sse": {
       "type": "sse",
-      "url": "http://localhost:8000/sse",
+      "url": "http://localhost:3100/sse",
       "timeout": 600
     }
   }
 }
 ```
 
-## 🔨 API 参考
+## 🔨 API Reference
 
 ### `extract_web_content`
 
-智能提取网页内容并转换为Markdown格式。
+Intelligently extract web content and convert to Markdown format.
 
-#### 参数
+#### Parameters
 
-| 参数 | 类型 | 必需 | 默认值 | 描述 |
-|------|------|------|--------|------|
-| `url` | string | ✅ | - | 要提取内容的网页URL |
-| `format` | string | ❌ | `markdown` | 返回格式：`markdown` 或 `json` |
-| `timeout` | number | ❌ | `30000` | 页面加载超时时间（毫秒） |
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `url` | string | ✅ | - | The web URL to extract content from |
+| `format` | string | ❌ | `markdown` | Return format: `markdown` or `json` |
+| `timeout` | number | ❌ | `30000` | Page loading timeout (milliseconds) |
 
-#### 使用示例
+#### Usage Examples
 
 ```javascript
-// 基础用法
+// Basic usage
 extract_web_content({
   url: "https://example.com/article"
 })
 
-// 高级用法
+// Advanced usage
 extract_web_content({
   url: "https://example.com/article",
   format: "json",
@@ -156,59 +156,59 @@ extract_web_content({
 })
 ```
 
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
 cleanweb-mcp/
-├── 📄 README.md                 # 项目文档
-├── 📦 package.json              # 项目配置
-├── ⚙️ tsconfig.json             # TypeScript配置
-├── 🔧 claude-config-example.json # Claude配置示例
-├── 📖 example-usage.md          # 使用示例
-├── 🏗️ build/                    # 编译输出
+├── 📄 README.md                 # Project documentation
+├── 📦 package.json              # Project configuration
+├── ⚙️ tsconfig.json             # TypeScript configuration
+├── 🔧 claude-config-example.json # Claude configuration example
+├── 📖 example-usage.md          # Usage examples
+├── 🏗️ build/                    # Compiled output
 │   ├── index.js
 │   └── tools/
 │       └── web-content-extractor.js
-└── 📝 src/                      # 源代码
-    ├── index.ts                 # MCP服务器主入口
+└── 📝 src/                      # Source code
+    ├── index.ts                 # MCP server main entry
     └── tools/
-        └── web-content-extractor.ts # 网页内容提取工具
+        └── web-content-extractor.ts # Web content extraction tool
 ```
 
-## 🔄 从Express服务器迁移
+## 🔄 Migration from Express Server
 
-原有的Express服务器 (`server.js`) 仍然可以独立运行：
+The original Express server (`server.js`) can still run independently:
 
 ```bash
 npm start
 ```
 
-MCP版本提供了相同的核心功能，但通过MCP协议与AI助手集成。
+The MCP version provides the same core functionality but integrates with AI assistants through the MCP protocol.
 
-## 🚨 注意事项
+## 🚨 Important Notes
 
-1. **轻量级实现**: 使用HTTP客户端获取静态内容，无需浏览器依赖
-2. **网络访问**: 需要能够访问目标网站
-3. **静态内容**: 主要适用于静态HTML内容，动态渲染的内容可能无法获取
-4. **超时设置**: 对于加载缓慢的网站，可以适当增加timeout参数
-5. **内容优化**: 自动优化图片链接显示，提升内容可读性
+1. **Lightweight Implementation**: Uses HTTP client to fetch static content, no browser dependencies required
+2. **Network Access**: Requires access to target websites
+3. **Static Content**: Primarily suitable for static HTML content, dynamically rendered content may not be accessible
+4. **Timeout Settings**: For slow-loading websites, you can appropriately increase the timeout parameter
+5. **Content Optimization**: Automatically optimizes image link display for better readability
 
-## 🤝 贡献
+## 🤝 Contributing
 
-欢迎提交Issue和Pull Request！如果你有任何问题或建议，请随时联系我。
+Welcome to submit Issues and Pull Requests! If you have any questions or suggestions, feel free to contact me.
 
-## 📞 联系方式
+## 📞 Contact
 
 - **GitHub**: [guangxiangdebizi](https://github.com/guangxiangdebizi/)
 - **Email**: guangxiangdebizi@gmail.com
 - **LinkedIn**: [Xingyu Chen](https://www.linkedin.com/in/xingyu-chen-b5b3b0313/)
 - **NPM**: [@xingyuchen](https://www.npmjs.com/~xingyuchen)
 
-## 🔗 相关链接
+## 🔗 Related Links
 
-- **GitHub仓库**: [https://github.com/guangxiangdebizi/cleanweb-mcp](https://github.com/guangxiangdebizi/cleanweb-mcp)
-- **NPM包**: [https://www.npmjs.com/package/cleanweb-mcp](https://www.npmjs.com/package/cleanweb-mcp)
+- **GitHub Repository**: [https://github.com/guangxiangdebizi/cleanweb-mcp](https://github.com/guangxiangdebizi/cleanweb-mcp)
+- **NPM Package**: [https://www.npmjs.com/package/cleanweb-mcp](https://www.npmjs.com/package/cleanweb-mcp)
 
-## 📄 许可证
+## 📄 License
 
-MIT License - 详见 [LICENSE](LICENSE) 文件
+MIT License - See [LICENSE](LICENSE) file for details
