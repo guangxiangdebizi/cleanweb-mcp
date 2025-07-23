@@ -1,0 +1,54 @@
+{
+  "name": "cleanweb-mcp",
+  "version": "1.0.0",
+  "description": "A lightweight MCP server for extracting clean web content with intelligent content filtering and Markdown conversion",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "tsc",
+    "mcp:build": "tsc",
+    "mcp:stdio": "npm run build && node build/index.js",
+    "mcp:dev": "tsc --watch",
+    "mcp:sse": "npm run build && npx supergateway --stdio \"node build/index.js\" --port 8000",
+    "mcp:ws": "npm run build && npx supergateway --stdio \"node build/index.js\" --outputTransport ws --port 8001",
+    "mcp:deploy": "npm run build && npx supergateway --stdio \"node build/index.js\" --port 8000 --cors --healthEndpoint /health"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "web-scraping",
+    "markdown",
+    "content-extraction",
+    "clean-web",
+    "content-filtering",
+    "ai-tools",
+    "lightweight"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.6.0",
+    "@mozilla/readability": "^0.4.4",
+    "axios": "^1.10.0",
+    "cheerio": "^1.1.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "jsdom": "^23.0.1",
+    "turndown": "^7.1.2",
+    "yargs": "^17.7.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^21.1.7",
+    "@types/node": "^20.11.24",
+    "@types/turndown": "^5.0.4",
+    "nodemon": "^3.0.2",
+    "supergateway": "^1.0.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.3",
+    "typescript": "^5.3.3"
+  }
+}

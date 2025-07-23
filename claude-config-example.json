@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "cleanweb-mcp": {
+      "command": "node",
+      "args": ["C:\\Users\\26214\\Desktop\\CopyCat2Jina\\build\\index.js"],
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "cleanweb-mcp": {
+      "type": "sse",
+      "url": "http://localhost:8000/sse",
+      "timeout": 600
+      }
+    }
+  }
+}
